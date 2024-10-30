@@ -388,8 +388,7 @@ require_once("header.php");
           <h2 class="mb-4">Be a part of our growing Real State Realtors</h2>
           <p>
             <a
-              href="#"
-              target="_blank"
+              href="./process/signup.php"
               class="btn btn-primary text-white py-3 px-4"
               >Sign up to be an Associate</a
             >
