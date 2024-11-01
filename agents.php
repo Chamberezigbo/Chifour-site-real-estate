@@ -1,5 +1,10 @@
 <?php
 require_once("header.php");
+require('./process/core/pdo.php');
+$db = new DatabaseClass();
+
+// Query the database after processing any POST requests
+$users = $db->SelectAll("SELECT * FROM agent");
 
 ?>
 
@@ -163,108 +168,52 @@ require_once("header.php");
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-              <!-- <img
-                src="images/person_1-min.jpg"
-                alt="Image"
-                class="img-fluid"
-              /> -->
+            <?php if (!empty($users)) { ?>
+                <?php foreach ($users as $user) { ?>
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-5">
+                        <div class="h-100 person">
+                            <!-- Placeholder for image if needed -->
+                            <!-- <img src="path/to/agent/image.jpg" alt="Agent Image" class="img-fluid" /> -->
 
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">James Doe</a></h2>
-                <span class="meta d-block mb-3">Verified</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
+                            <div class="person-contents">
+                                <h2 class="mb-0">
+                                    <a href="#"><?php echo htmlspecialchars($user['fullName']); ?></a>
+                                </h2>
+                                <span class="meta d-block mb-3">
+                                    <a href="#"><?php echo htmlspecialchars($user['email']); ?></a>
+                                </span>
+                                <span class="meta d-block mb-3">
+                                    <a href="#"><?php echo htmlspecialchars($user['phone']); ?></a>
+                                </span>
+                                <p>
+                                    <!-- Placeholder for agent description -->
+                                    <?php echo htmlspecialchars($user['address']); ?>
+                                </p>
 
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-              <!-- <img
-                src="images/person_2-min.jpg"
-                alt="Image"
-                class="img-fluid"
-              /> -->
-
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Jean Smith</a></h2>
-                <span class="meta d-block mb-3">Verified</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-             <!--  <img
-                src="images/person_3-min.jpg"
-                alt="Image"
-                class="img-fluid"
-              /> -->
-
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Alicia Huston</a></h2>
-                <span class="meta d-block mb-3">Not Verified</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+                                <ul class="verification-status list-unstyled list-inline">
+                                    <?php if ($user['verified']) { ?>
+                                        <!-- Good mark for verified users -->
+                                        <li class="list-inline-item">
+                                            <span class="icon-check-circle" style="color: green; font-size: 1.5em;"></span> <!-- Checkmark icon -->
+                                        </li>
+                                        <li class="list-inline-item">Verified</li>
+                                    <?php } else { ?>
+                                        <!-- Bad mark for not verified users -->
+                                        <li class="list-inline-item">
+                                            <span class="icon-times-circle" style="color: red; font-size: 1.5em;"></span> <!-- Cross icon -->
+                                        </li>
+                                        <li class="list-inline-item">Not Verified</li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="col-12">
+                    <p class="text-center">No agents available.</p>
+                </div>
+            <?php } ?>
         </div>
       </div>
     </div>
@@ -272,114 +221,7 @@ require_once("header.php");
 
 
 
- <div class="section section-5 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-            <!--   <img
-                src="images/chifourlogo.png"
-                alt="Image"
-                class="img-fluid"
-              />
- -->
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">James Doe</a></h2>
-                <span class="meta d-block mb-3">Verified</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-             <!--  <img
-                src="images/person_2-min.jpg"
-                alt="Image"
-                class="img-fluid"
-              /> -->
-
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Jean Smith</a></h2>
-                <span class="meta d-block mb-3">Verified</span>                
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-              <!-- <img
-                src="images/person_3-min.jpg"
-                alt="Image"
-                class="img-fluid"
-              /> -->
-
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Alicia Huston</a></h2>
-                <span class="meta d-block mb-3">Verified</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+ <
 
     
      <div class="section">
