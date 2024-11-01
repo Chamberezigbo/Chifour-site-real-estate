@@ -55,7 +55,7 @@
 <script src="vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="../js/toastr-master/build//toastr.min.js"></script>
+<script src="../js/toastr-master/build/toastr.min.js"></script>
 
 <script>
      $(document).ready(function() {

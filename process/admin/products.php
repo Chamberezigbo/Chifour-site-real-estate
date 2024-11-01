@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 //if action is null, render the form to create a new package
 $action = (isset($_GET) && isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : null;
@@ -47,10 +46,11 @@ if ($action == "view") {
                if (isset($_POST['action']) && !empty($_POST['action'])) {
                     //update a package
                     if ($_POST['action'] == 'upd-package') {
-                         $db->Update("UPDATE product SET name = :name, amount = :amount, description = :des WHERE id = :id", [
+                         $db->Update("UPDATE product SET name = :name, amount = :amount, description = :des, product_type = :product_type WHERE id = :id", [
                               'name' => $_POST['product_name'],
                               'des' => $_POST['pro_description'],
                               'amount' => $_POST['pro_amount'],
+                              'product_type' => $_POST['product_type'],
                               'id' => $singleId,
                          ]);
                          $_SESSION['success'] = true;
@@ -90,11 +90,12 @@ if ($action == "view") {
                     header("Location:./products.php");
                     exit();
                } else {
-                    $db->Insert("INSERT INTO product (name, description, amount, pro_image) VALUES (:name, :description, :amount, :pro_image)", [
+                    $db->Insert("INSERT INTO product (name, description, amount, pro_image, product_type) VALUES (:name, :description, :amount, :pro_image, :product_type)", [
                          'name' => $_POST['product_name'],
                          'description' => $_POST['pro_description'],
                          'amount' => $_POST['pro_amount'],
                          'pro_image' => $doc,
+                         'product_type' => $_POST['product_type'], // New field
                     ]);
 
 
@@ -205,19 +206,27 @@ require "header.php";
                <div style="max-width: 500px; margin:auto;">
                     <form method="post" id="form_new_package" action="" enctype="multipart/form-data" novalidate>
                          <div class="mb-3">
-                              <label class="form-label">Product name</label>
+                              <label class="form-label">Property name</label>
                               <input class="form-control" type="text" name="product_name" id="inp_package_name" octavalidate="R,TEXT">
                          </div>
                          <div class="mb-3">
-                              <label class="form-label">Product Description</label>
+                              <label class="form-label">Property Description</label>
                               <textarea name="pro_description" class="form-control" cols="30" id="inp_pro_des" rows="10" octavalidate="R,TEXT"></textarea>
                          </div>
                          <div class="mb-3">
-                              <label class="form-label">Product Amount</label>
+                              <label class="form-label">Property Amount</label>
                               <input class="form-control" type="number" name="pro_amount" id="inp_max_deposit" octavalidate="R,DIGITS">
                          </div>
                          <div class="mb-3">
-                              <label class="form-label">Product Image</label>
+                              <label class="form-label">Property Type</label>
+                              <select class="form-control" name="product_type" id="inp_product_type" octavalidate="R">
+                              <option value="land_property">Land Property</option>
+                              <option value="buy_and_build">Buy and Build</option>
+                              </select>
+                         </div>
+
+                         <div class="mb-3">
+                              <label class="form-label">Property Image</label>
                               <input class="form-control" type="file" name="pro_image" id="inp_min_return" octavalidate="R" accept-mime="image/jpeg, image/png, image/jpg" maxsize="10mb">
                          </div>
                          <div class=" mb-2">
@@ -251,6 +260,13 @@ require "header.php";
                                    <textarea name="pro_description" class="form-control" cols="30" id="inp_pro_des" rows="10" octavalidate="R,TEXT">
                                         <?= $_SESSION['proDecs'] ?>
                                    </textarea>
+                              </div>
+                              <div class="mb-3">
+                              <label class="form-label">Property Type</label>
+                                   <select class="form-control" name="product_type" id="inp_product_type" octavalidate="R">
+                                   <option value="land_property">Land Property</option>
+                                   <option value="buy_and_build">Buy and Build</option>
+                                   </select>
                               </div>
                               <div class="mb-3">
                                    <label class="form-label">Product Amount</label>

@@ -169,9 +169,9 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
 
                <!-- Nav Item - Sales Tables  -->
                <li class="nav-item">
-                    <a class="nav-link" href="sales.php">
+                    <a class="nav-link" href="referrals.php">
                          <i class="fas fa-fw fa-table"></i>
-                         <span>Sales</span></a>
+                         <span>Referrals</span></a>
                </li>
 
                <!-- Divider -->

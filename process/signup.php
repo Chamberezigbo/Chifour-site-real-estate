@@ -14,6 +14,13 @@ use Validate\octaValidate;
 
 $db = new DatabaseClass();
 
+if (isset($_GET['ref'])) {
+     # code...
+     $ref = $_GET['ref'];
+} else {
+     $ref = null;
+}
+
 //set configuration
 $options = array(
      "stripTags" => true,
@@ -91,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                $bankAccNumber = $_POST['bankAccNumber'];
                $bankName = $_POST['bankName'];
 
-               $query = "INSERT INTO agent (user_id, fullName, email, password, phone, address, bank_acc_name, bank_acc_number, bank_name) 
-                     VALUES (:user_id, :fullName, :email, :password, :phone, :address, :bank_acc_name, :bank_acc_number, :bank_name)";
+               $query = "INSERT INTO agent (user_id, fullName, email, password, phone, address, bank_acc_name, bank_acc_number, bank_name,referral) 
+                     VALUES (:user_id, :fullName, :email, :password, :phone, :address, :bank_acc_name, :bank_acc_number, :bank_name, :referral)";
 
                $data = [
                      'user_id' => $user_id,
@@ -104,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      'bank_acc_name' => $bankAccName,
                      'bank_acc_number' => $bankAccNumber,
                      'bank_name' => $bankName,
+                     'referral' => $ref,
               ];
 
 

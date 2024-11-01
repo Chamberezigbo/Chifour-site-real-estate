@@ -1,3 +1,19 @@
+<?php
+// Start the output buffer
+ob_start();
+
+// Start the session
+session_start();
+
+// Check if the user is authenticated
+if (!isset($_SESSION['admin-auth']) || $_SESSION['admin-auth'] !== true) {
+    // User is not authenticated, redirect to the login page
+    header('Location: ../login.php');
+    exit();
+}
+
+// If authenticated, display the content (User's name will be shown in the header)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +25,7 @@
      <meta name="description" content="">
      <meta name="author" content="">
 
-     <title>NID Africa - Dashboard</title>
+     <title>Chifour - Dashboard</title>
 
      <!-- Custom fonts for this template-->
      <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -94,7 +110,7 @@
                     <div class="sidebar-brand-icon rotate-n-15">
                          <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">NID <sup>Africa</sup></div>
+                    <div class="sidebar-brand-text mx-3">Chifour <sup>Admin</sup></div>
                </a>
 
                <!-- Divider -->
@@ -139,21 +155,21 @@
                <li class="nav-item">
                     <a class="nav-link" href="products.php?action=view">
                          <i class=" fas fa-fw fa-chart-area"></i>
-                         <span>All Products</span></a>
+                         <span>All Properties</span></a>
                </li>
 
                <!-- Nav Item - Tables -->
                <li class="nav-item">
                     <a class="nav-link" href="tables.php">
                          <i class="fas fa-fw fa-table"></i>
-                         <span>Tables OF Users</span></a>
+                         <span>Tables OF Agents</span></a>
                </li>
 
                <!-- Nav Item - Sales Tables  -->
                <li class="nav-item">
-                    <a class="nav-link" href="sales.php">
+                    <a class="nav-link" href="referrals.php">
                          <i class="fas fa-fw fa-table"></i>
-                         <span>Sales</span></a>
+                         <span>Referrals</span></a>
                </li>
 
                <!-- Divider -->
