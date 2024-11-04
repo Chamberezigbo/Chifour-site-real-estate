@@ -209,7 +209,7 @@ $properties = $db->SelectAll("SELECT * FROM product ORDER BY RAND() LIMIT 5", []
                         <div>
                           <span class="d-block mb-2 text-black-50"><?= htmlspecialchars($property['name']) ?></span>
                           <span class="city d-block mb-3"><?= htmlspecialchars($property['product_type']) ?></span>
-                          <a href="property-single.php?id=<?php echo $product['id']; ?>" class="btn btn-primary py-2 px-3">See details</a>
+                          <a href="property-single.php?id=<?php echo $property['id']; ?>" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
                       </div>
                     </div>

@@ -3,25 +3,21 @@ require_once("header.php");
 require('./process/core/pdo.php');
 $db = new DatabaseClass();
 
-// Get the current page from the URL or set a default
-$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
 // Define how many results per page
 $resultsPerPage = 6;
+
+// Set the current page number from the URL, defaulting to 1
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 // Calculate the starting limit index
 $offset = ($currentPage - 1) * $resultsPerPage;
 
 // Fetch the properties with pagination
-$properties = $db->SelectAll("SELECT * FROM product WHERE product_type = 'buy_and_build' ORDER BY RAND() LIMIT :offset, :limit", [
-    'offset' => $offset,
-    'limit' => $resultsPerPage
-]);
+$properties = $db->SelectAll("SELECT * FROM product WHERE product_type = 'buy_and_build' ORDER BY RAND() LIMIT $offset, $resultsPerPage");
 
 // Count total properties for pagination
 $totalProperties = $db->SelectOne("SELECT COUNT(*) as total FROM product WHERE product_type = 'buy_and_build'", []);
 $totalPages = ceil($totalProperties['total'] / $resultsPerPage);
-
 ?>
 
     <div

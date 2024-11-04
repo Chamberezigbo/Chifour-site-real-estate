@@ -1,4 +1,5 @@
 <?php
+require "header.php";
 
 //if action is null, render the form to create a new package
 $action = (isset($_GET) && isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : null;
@@ -116,7 +117,6 @@ if ($action == "view") {
      }
 }
 
-require "header.php";
 ?>
 
 <div class="content-inner w-100">

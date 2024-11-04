@@ -103,7 +103,6 @@
 
 
             <a
-              href="contact.php"
               class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
               data-toggle="collapse"
               data-target="#main-navbar"
